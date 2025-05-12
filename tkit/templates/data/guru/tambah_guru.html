@@ -1,0 +1,53 @@
+{% extends 'layout/main.html' %}
+
+<!-- title -->
+{% block title %} Tambah Data Guru {% endblock title %}
+
+<!-- Start Content -->
+{% block content %}
+
+<!-- Navbar -->
+{% include 'layout/navbar.html' %}
+
+<!-- message -->
+{% block messages %} {% endblock messages %}
+
+<!-- component -->
+<div class="min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-lg">
+    <!-- Header -->
+    <div class="text-center">
+      <h2 class="text-3xl font-bold text-[#039f18]">TKIT Ibadurrohman</h2>
+      <p class="mt-2 text-sm text-gray-600">Tambahkan data Guru</p>
+    </div>
+
+    <!-- Form -->
+    <form method="post" class="mt-8 space-y-6">
+      {% csrf_token %}
+      <div class="rounded-md shadow-sm space-y-4">
+        <!-- Loop semua field -->
+        {% for field in form %}
+        <div class="mb-4">
+          <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"> {{ field.label }} </label>
+          {{ field }} {% if field.errors %}
+          <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ field.errors.0 }}</p>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+
+      <div>
+        <button
+          type="submit"
+          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[#039f18] hover:bg-[#026b10] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#039f18]"
+        >
+          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+            <i class="fas fa-add"></i>
+          </span>
+          Tambah Guru
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock content %}

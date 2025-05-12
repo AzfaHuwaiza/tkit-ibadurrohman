@@ -1,0 +1,105 @@
+{% extends 'layout/main.html' %}
+
+<!-- title -->
+{% block title %} Profil Saya {% endblock title %}
+
+<!-- Start Content -->
+{% block content %} {% include 'layout/navbar.html' %}
+
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto md:py-6 sm:px-6 lg:px-8">
+  <!-- Profile Section -->
+  <div class="px-4 py-6 sm:px-0">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="px-4 py-4 md:py-5 sm:px-6 bg-[#039f18]">
+        <h3 class="text-md md:text-lg leading-6 font-medium text-white">Profil Saya</h3>
+        <p class="mt-1 max-w-2xl text-sm text-white opacity-80">Informasi detail profil Anda</p>
+      </div>
+
+      <div class="border-t border-gray-200">
+        <div class="px-4 py-5 sm:p-6">
+          <div class="flex items-center space-x-6">
+            <div class="flex-shrink-0">
+              <img class="h-16 w-16 md:h-24 md:w-24 rounded-full border-4 border-[#039f18]" src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg" alt="Profile Image" />
+            </div>
+            <div>
+              <h3 class=""><span class="text-md md:text-xl font-bold text-gray-900">{{ full_name }}</span> <span class="text-sm md:text-md text-gray-500">@{{ username }}</span></h3>
+              <p class="text-sm md:text-md text-gray-500">{{ jabatan }}</p>
+            </div>
+          </div>
+
+          <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+            <div class="sm:col-span-3">
+              <dt class="text-sm font-medium text-gray-500">NUPTK</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ nuptk }}</dd>
+            </div>
+
+            <div class="sm:col-span-3">
+              <dt class="text-sm font-medium text-gray-500">Tempat, Tanggal Lahir</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ tempat_lahir }}, {{ tanggal_lahir }}</dd>
+            </div>
+
+            <div class="sm:col-span-3">
+              <dt class="text-sm font-medium text-gray-500">Nama Lengkap</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ full_name }}</dd>
+            </div>
+
+            <div class="sm:col-span-3">
+              <dt class="text-sm font-medium text-gray-500">Email</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ email }}</dd>
+            </div>
+
+            <div class="sm:col-span-3">
+              <dt class="text-sm font-medium text-gray-500">Nomor Telepon</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ nomor_hp }}</dd>
+            </div>
+
+            <div class="sm:col-span-3">
+              <dt class="text-sm font-medium text-gray-500">Pendidikan Terakhir</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ pendidikan_terakhir }}</dd>
+            </div>
+
+            <div class="sm:col-span-3">
+              <dt class="text-sm font-medium text-gray-500">Terhitung Mulai Tanggal</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ tmt }}</dd>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Information -->
+      <div class="border-t border-gray-200">
+        <div class="px-4 py-5 sm:p-6">
+          <h4 class="text-lg font-medium text-gray-900">Kelas yang Diampu</h4>
+          <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div class="bg-gray-50 rounded-lg p-4">
+              <h5 class="font-medium text-gray-900">Kelas A1</h5>
+              <p class="text-sm text-gray-500">20 Siswa</p>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4">
+              <h5 class="font-medium text-gray-900">Kelas A2</h5>
+              <p class="text-sm text-gray-500">18 Siswa</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security Settings -->
+      <!-- <div class="border-t border-gray-200">
+        <div class="px-4 py-5 sm:p-6">
+          <h4 class="text-lg font-medium text-gray-900">Pengaturan Keamanan</h4>
+          <div class="mt-4">
+            <button
+              type="button"
+              class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#039f18]"
+            >
+              <i class="fas fa-key mr-2"></i>
+              Ubah Kata Sandi
+            </button>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</main>
+{% endblock %}

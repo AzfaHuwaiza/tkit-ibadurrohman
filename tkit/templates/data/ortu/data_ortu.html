@@ -1,0 +1,66 @@
+{% extends 'layout/main.html' %} {% block title %} Data Orang Tua {% endblock title %} {% block content %} {% include 'layout/navbar.html' %}
+
+<main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 pt-12">
+  <!-- Header Section -->
+  <div class="px-4 sm:px-0 mb-8">
+    <h2 class="text-2xl font-bold text-gray-900">Data Orang Tua</h2>
+    <p class="mt-1 text-sm text-gray-600">Daftar akun orang tua murid TKIT Ibadurrohman</p>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <div class="px-4 sm:px-0 mb-6">
+    <div class="flex flex-col sm:flex-row gap-4">
+      <form method="get" class="flex-1">
+        <div class="relative">
+          <input type="text" name="ortu" value="{{ query|default:'' }}" placeholder="Cari orang tua..." class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#039f18] focus:border-[#039f18]" />
+          <span class="absolute right-3 top-2.5 text-gray-400">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="px-4 sm:px-0">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 text-sm">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No.</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Orang Tua</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nomor HP</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Alamat</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Siswa</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            {% for ortu in data_ortu %}
+            <tr>
+              <td class="px-6 py-3 text-gray-700">{{ forloop.counter }}</td>
+              <td class="px-6 py-3 text-gray-700">{{ ortu.user.first_name }} {{ ortu.user.last_name }}</td>
+              <td class="px-6 py-3 text-gray-700">{{ ortu.user.email }}</td>
+              <td class="px-6 py-3 text-gray-700">{{ ortu.nomor_hp }}</td>
+              <td class="px-6 py-3 text-gray-700">{{ ortu.alamat }}</td>
+              <td class="px-6 py-3 text-gray-700">
+                {% if ortu.siswa %}
+                <a href="{% url 'detail_siswa' ortu.siswa.id %}" class="text-[#039f18] hover:underline">{{ ortu.siswa.nama_lengkap }}</a>
+                {% else %}
+                <span class="text-red-500 italic">Belum Terhubung</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="6" class="text-center text-gray-500 py-4">Belum ada data orang tua.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'layout/main.html' %}
+
+<!-- title -->
+{% block title %} Pilih Akses {% endblock title %}
+
+<!-- Start Content -->
+{% block content %}
+<div class="flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
+  <div class="max-w-xl w-full space-y-8 bg-white p-8 rounded-lg shadow-lg">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold text-[#039f18]">Pilih Akses</h2>
+      <p class="mt-2 text-sm text-gray-600">Silakan pilih akses Anda</p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <!-- Card untuk Guru -->
+      <a href="{% url 'login_guru' %}" class="bg-[#039f18] rounded-lg shadow-lg p-6 text-center text-white cursor-pointer hover:bg-[#026b10] transition duration-300">
+        <h3 class="text-xl font-semibold">Guru</h3>
+        <p class="mt-2">Akses untuk guru</p>
+        <div class="mt-4 inline-block bg-white text-[#039f18] font-medium rounded-md px-4 py-2">Masuk sebagai Guru</div>
+      </a>
+
+      <!-- Card untuk Orang Tua -->
+      <a href="{% url 'login' %}" class="bg-[#039f18] rounded-lg shadow-lg p-6 text-center text-white cursor-pointer hover:bg-[#026b10] transition duration-300">
+        <h3 class="text-xl font-semibold">Orang Tua</h3>
+        <p class="mt-2">Akses untuk orang tua</p>
+        <div class="mt-4 inline-block bg-white text-[#039f18] font-medium rounded-md px-4 py-2">Masuk sebagai Orang Tua</div>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

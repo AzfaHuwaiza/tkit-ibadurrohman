@@ -1,0 +1,64 @@
+{% load static %}
+
+<nav class="bg-white shadow-lg sticky top-0 z-50">
+  <!-- Top Mini Navbar -->
+  <div class="bg-[#039f18] py-1 px-4 shadow-sm hidden md:block">
+    <div class="max-w-7xl mx-auto flex justify-end items-center space-x-4 text-sm text-white">
+      <a href="https://www.instagram.com/tkitibadurrohman_tasikmalaya" target="_blank" class="hover:text-gray-300">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.youtube.com/@ibadurrohmanchannel2032" target="_blank" class="hover:text-gray-300">
+        <i class="fab fa-youtube"></i>
+      </a>
+      <a href="https://ibadurrohman.sch.id/" target="_blank" class="hover:text-gray-300">
+        <i class="fas fa-globe"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Desktop Menu -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-24">
+      <a href="{% url 'home' %}" class="flex">
+        <div class="flex-shrink-0 flex items-center">
+          <img src="{% static 'data_siswa/images/ibadurrohman_logo.png' %}" alt="Logo" class="h-12 md:h-16 w-auto" />
+          <span class="text-[#039f18] text-md md:text-xl font-bold ml-3">TKIT Ibadurrohman</span>
+        </div>
+      </a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden sm:flex sm:items-center sm:ml-6">
+        <a href="{% url 'home' %}" class="text-gray-500 px-3 py-2 hover:text-gray-900 text-sm font-medium">Beranda</a>
+
+        {% if not user.is_superuser %}
+        <!-- Guru / Ortu -->
+        <a href="{% url 'my_profile' %}" class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Profil</a>
+        {% endif %} {% if user.is_superuser %}
+        <a href="/admin" class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium" target="_blank">Admin</a>
+        {% endif %}
+        <!-- All -->
+        <a href="{% url 'logout' %}" class="text-red-500 hover:text-red-800 px-3 py-2 rounded-md text-sm font-medium">Keluar</a>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="flex items-center sm:hidden">
+        <button type="button" class="mobile-menu-button inline-flex items-center justify-center p-2 rounded-md bg-white text-[#039f18] hover:text-white hover:bg-[#039f18] border border-2 border-[#039f18]">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu hidden sm:hidden">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      <a href="{% url 'home' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium bg-[#039f18]">Beranda</a>
+      {% if user.is_superuser %}
+      <a href="/admin/" class="text-[#039f18] block hover:text-white hover:bg-[#039f18] px-3 py-2 rounded-md text-base font-medium">Admin</a>
+      {% endif %} {% if not user.is_superuser %}
+      <a href="{% url 'my_profile' %}" class="text-[#039f18] block hover:text-white hover:bg-[#039f18] px-3 py-2 rounded-md text-base font-medium">Profil</a>
+      {% endif %}
+      <a href="{% url 'logout' %}" class="text-[#039f18] block hover:text-white hover:bg-[#039f18] px-3 py-2 rounded-md text-base font-medium">Keluar</a>
+    </div>
+  </div>
+</nav>

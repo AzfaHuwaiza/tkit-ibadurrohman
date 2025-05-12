@@ -1,0 +1,93 @@
+{% extends 'layout/main.html' %}
+
+<!-- title -->
+{% block title %} Data Guru {% endblock title %}
+
+<!-- Start Content -->
+{% block content %}
+<!-- Navbar -->
+{% include 'layout/navbar.html' %}
+
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 pt-12">
+  <!-- Header Section -->
+  <div class="px-4 sm:px-0 mb-8">
+    <h2 class="text-2xl font-bold text-gray-900">Data Guru dan Staff</h2>
+    <p class="mt-1 text-sm text-gray-600">Daftar lengkap data Guru dan Staff TKIT Ibadurrohman</p>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <div class="px-4 sm:px-0 mb-6">
+    <div class="flex flex-col sm:flex-row gap-4">
+      <form method="get" class="flex-1">
+        <div class="relative">
+          <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Cari guru/staff..." class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#039f18] focus:border-[#039f18]" />
+          <span class="absolute right-3 top-2.5 text-gray-400">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+      </form>
+
+      {% if user.is_superuser %}
+      <a href="{% url 'tambah_guru' %}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#039f18] hover:bg-[#026b10]">
+        <i class="fas fa-plus mr-2"></i>
+        Tambah Guru
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="px-4 sm:px-0">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 text-sm">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="text-center px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No.</th>
+              <th class="text-center px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">NUPTK</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Lengkap</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">Tempat, Tanggal Lahir</th>
+              <th class="text-center px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">Jabatan</th>
+              <th class="text-center px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">Terhitung mulai tanggal</th>
+              <th class="text-center px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            {% for guru in data_guru %}
+            <tr>
+              <td class="text-center px-6 py-3 text-gray-700">{{ forloop.counter }}</td>
+              <td class="text-center px-6 py-3 text-gray-700 hidden md:table-cell">{{ guru.nuptk }}</td>
+              <td class="px-6 py-3 text-gray-700">
+                <a href="{% url 'detail_guru' guru.id %}" class="text-[#039f18] hover:underline"> {{ guru.user.get_full_name }} </a>
+              </td>
+              <td class="px-6 py-3 text-gray-700 hidden md:table-cell">{{ guru.tempat_lahir }}, {{ guru.tanggal_lahir }}</td>
+              <td class="text-center px-6 py-3 text-gray-700 hidden md:table-cell">{{ guru.jabatan }}</td>
+              <td class="text-center px-6 py-3 text-gray-700 hidden md:table-cell">{{ guru.tmt }}</td>
+              <td class="text-center px-3 py-3 text-left text-xs font-medium text-gray-500 tracking-wider space-x-2">
+                <!-- Tombol Ubah -->
+                <a href="{% url 'edit_guru' guru.id %}" class="text-yellow-500 hover:text-gray-500 p-2">
+                  <i class="fas fa-edit"></i>
+                </a>
+
+                <!-- Tombol Hapus -->
+                <form action="{% url 'hapus_guru' guru.id %}" method="post" style="display: inline">
+                  {% csrf_token %}
+                  <button type="submit" onclick="return confirm('Yakin ingin menghapus data ini?')" class="text-red-500 hover:text-gray-500 p-2">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="9" class="text-center text-gray-500 py-4">Belum ada data guru.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

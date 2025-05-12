@@ -1,0 +1,119 @@
+{% extends 'layout/main.html' %}
+
+<!-- title -->
+{% block title %} Data Siswa {% endblock title %}
+
+<!-- Start Content -->
+{% block content %}
+<!-- Navbar -->
+{% include 'layout/navbar.html' %}
+
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 pt-12">
+  <!-- Header Section -->
+  <div class="px-4 sm:px-0 mb-8">
+    <h2 class="text-2xl font-bold text-gray-900">Data Siswa</h2>
+    <p class="mt-1 text-sm text-gray-600">Daftar lengkap data siswa TKIT Ibadurrohman</p>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <div class="px-4 sm:px-0 mb-6">
+    <div class="flex flex-col sm:flex-row gap-4">
+      <form method="get" class="flex-1">
+        <div class="relative">
+          <input type="text" name="siswa" value="{{ query|default:'' }}" placeholder="Cari siswa..." class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#039f18] focus:border-[#039f18]" />
+          <span class="absolute right-3 top-2.5 text-gray-400">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+      </form>
+
+      {% if user.is_superuser %}
+      <a href="{% url 'tambah_siswa' %}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#039f18] hover:bg-[#026b10]">
+        <i class="fas fa-plus mr-2"></i>
+        Tambah Siswa
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="px-4 sm:px-0">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 text-xs md:text-sm">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="text-center px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No.</th>
+              <th scope="col" class="text-center px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">NIS</th>
+              <th scope="col" class="text-center px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">NISN</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Lengkap</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">Jenis Kelamin</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">Tempat, Tanggal Lahir</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">Nama Orang Tua</th>
+
+              <!-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Alamat</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nomor HP Orang Tua</th> -->
+              {% if user.is_superuser %}
+              <th scope="col" class="text-center px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+              {% endif %}
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <!-- Sample Data 1 -->
+            {% for siswa in data_siswa %}
+            <tr class="border-t">
+              <td class="text-center px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">{{ forloop.counter }}</td>
+              <td class="text-center px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell">{{ siswa.nis }}</td>
+              <td class="text-center px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell">{{ siswa.nisn }}</td>
+              <td class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">
+                <a href="{% url 'detail_siswa' siswa.id %}" class="text-[#039f18] hover:underline"> {{ siswa.nama_lengkap }} </a>
+              </td>
+              <td class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell">{{ siswa.jenis_kelamin }}</td>
+              <td class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell">{{ siswa.tempat_lahir }}, {{ siswa.tanggal_lahir }}</td>
+              <td class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell">
+                {% if siswa.ortu %} {{ siswa.ortu.user.first_name }} {{ siswa.ortu.user.last_name }} {% else %} {{ siswa.nama_orang_tua }} {% endif %}
+              </td>
+              <!-- <td class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">{% if siswa.ortu and siswa.ortu.alamat %} {{ siswa.ortu.alamat }} {% else %} {{ siswa.alamat }} {% endif %}</td>
+              <td class="px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider">{% if siswa.ortu and siswa.ortu.nomor_hp %} {{ siswa.ortu.nomor_hp}} {% else %} {{ siswa.no_hp_ortu }} {% endif %}</td> -->
+
+              {% if user.is_superuser %}
+              <td class="text-center px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider space-x-2">
+                <!-- Tombol Ubah -->
+
+                <a href="{% url 'edit_siswa' siswa.id %}" class="text-yellow-500 hover:text-gray-500 p-2">
+                  <i class="fas fa-edit"></i>
+                </a>
+
+                <!-- Tombol Hapus -->
+                <form action="{% url 'hapus_siswa' siswa.id %}" method="post" style="display: inline">
+                  {% csrf_token %}
+                  <button type="submit" onclick="return confirm('Yakin ingin menghapus data ini?')" class="text-red-500 hover:text-gray-500 p-2">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </form>
+              </td>
+              {% endif %}
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="7" class="py-4 px-4 text-center text-gray-500">Belum ada data siswa.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <!-- <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+        <div class="flex items-center justify-between">
+          <div class="flex-1 flex justify-between sm:hidden">
+            <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Previous</button>
+            <button class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Next</button>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</main>
+{% endblock %}

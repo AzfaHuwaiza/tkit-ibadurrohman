@@ -1,0 +1,71 @@
+{% extends 'layout/main.html' %}
+{% block title %} Rekap Perkembangan - {{ kelas.nama_kelas }} {% endblock %}
+{% block content %}
+{% include 'layout/navbar.html' %}
+
+<main class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+  <h2 class="text-2xl font-bold text-gray-900">Rekap Perkembangan Siswa</h2>
+  <p class="mt-1 text-sm text-gray-600 mb-6">Kelas {{ kelas.nama_kelas }}</p>
+
+  <div class="bg-white rounded-lg shadow p-4 mb-6">
+    <div class="flex flex-col sm:flex-row gap-4">
+      <form method="GET" class="flex flex-col md:flex-row gap-4 md:items-center">
+        <label class="text-sm font-medium text-gray-700">Pilih Periode:</label>
+        <select name="periode" class="w-full md:w-auto rounded-md border-gray-300">
+          {% for p in periode_list %}
+            <option value="{{ p.id }}" {% if p.id == periode.id %}selected{% endif %}>{{ p.minggu }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="bg-[#039f18] text-white px-4 py-2 rounded-md">Tampilkan</button>
+      </form>
+
+      <a href="{% url 'input_perkembangan' kelas.id %}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#039f18] hover:bg-[#026b10]">
+        <i class="fas fa-plus mr-2"></i>
+        Buat Laporan Perkembangan
+      </a>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+    <div class="bg-white p-4 rounded-lg shadow">
+      <p class="text-sm text-gray-600">Total Siswa</p>
+      <p class="text-xl font-bold text-gray-900">{{ total }}</p>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow">
+      <p class="text-sm text-gray-600">Sudah Dilaporkan</p>
+      <p class="text-xl font-bold text-green-600">{{ sudah }}</p>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow">
+      <p class="text-sm text-gray-600">Belum Dilaporkan</p>
+      <p class="text-xl font-bold text-red-600">{{ belum }}</p>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-left font-medium text-gray-500">Nama</th>
+          <th class="px-6 py-3 text-left font-medium text-gray-500">Kategori</th>
+          <th class="px-6 py-3 text-left font-medium text-gray-500">Periode</th>
+          <th class="px-6 py-3 text-left font-medium text-gray-500">Deskripsi</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        {% for r in rekap %}
+        <tr>
+          <td class="px-6 py-4">{{ r.siswa.nama_lengkap }}</td>
+          <td class="px-6 py-4">{{ r.kategori }}</td>
+          <td class="px-6 py-4">{{ r.periode.minggu }}</td>
+          <td class="px-6 py-4">{{ r.deskripsi }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4" class="px-6 py-4 text-center text-gray-500">Belum ada data perkembangan.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</main>
+{% endblock %}

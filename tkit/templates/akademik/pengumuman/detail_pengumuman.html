@@ -1,0 +1,70 @@
+{% extends 'layout/main.html' %} {% load custom_filters %}
+
+<!-- title -->
+{% block title %} Pengumuman {% endblock title %}
+
+<!-- Start Content -->
+{% block content %}
+<!-- Navbar -->
+{% include 'layout/navbar.html' %}
+
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+  <div class="px-4 sm:px-0">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <!-- Sidebar -->
+      <div class="bg-white rounded-lg shadow-lg p-6 hidden md:block">
+        <h2 class="text-2xl font-bold text-[#039f18] mb-4">Pengumuman</h2>
+        <div class="space-y-4">
+          {% for p in pengumuman_list %}
+          <a href="{% url 'detail_pengumuman' p.id %}" class="block text-gray-700 hover:text-[#039f18]">
+            <div class="text-sm">{{ p.subjek }}</div>
+            <div class="text-xs text-gray-500">{{ p.created_at|date:"d M Y" }}</div>
+          </a>
+          {% endfor %}
+        </div>
+
+        {% if user.is_superuser %}
+        <div class="mt-6 w-full text-center bg-[#039f18] text-white py-2 px-4 rounded-md hover:bg-[#026b10] transition duration-200">
+          <a href="{% url 'tambah_pengumuman' %}">Tambah Pengumuman</a>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Detail Content -->
+      <div class="md:col-span-3">
+        <div class="bg-[#039f18] text-white p-4 rounded-t-lg flex justify-between items-center">
+          <a href="{% url 'pengumuman' %}" class="text-white px-3 py-1"><i class="fas fa-arrow-left"></i></a>
+          <h2 class="text-lg md:text-xl font-semibold">Detail Pengumuman</h2>
+          <div class="w-[40px]"></div>
+        </div>
+
+        <div class="bg-white rounded-b-lg shadow-lg">
+          <div class="p-6">
+            <div class="mb-6">
+              <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ detail_pengumuman.subjek }}</h1>
+              <div class="flex items-center text-gray-500 text-sm">
+                <i class="far fa-calendar-alt mr-2"></i>
+                <span>{{ detail_pengumuman.created_at|date:"d M Y" }}</span>
+              </div>
+            </div>
+
+            <div class="prose max-w-none text-gray-600">{{ detail_pengumuman.deskripsi|urlize_blank }}</div>
+
+            <!-- Share Buttons -->
+            <div class="mt-8 pt-6 border-t border-gray-200">
+              <div class="flex items-center space-x-4">
+                <span class="text-gray-600">Bagikan:</span>
+                <a href="https://wa.me/?text=Cek pengumuman terbaru dari TKIT:%0A{{ url_pengumuman|urlencode }}" target="_blank" class="text-green-600 hover:text-green-700">
+                  <i class="fab fa-whatsapp"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

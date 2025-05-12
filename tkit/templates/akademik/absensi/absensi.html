@@ -1,0 +1,86 @@
+{% extends 'layout/main.html' %}
+
+{% block title %} Absensi Siswa {% endblock %}
+
+{% block content %}
+{% include 'layout/navbar.html' %}
+
+<main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+  <div class="px-4 sm:px-0 mb-8">
+    <h2 class="text-2xl font-bold text-gray-900">Absensi Siswa</h2>
+  </div>
+
+  <!-- Form Pilih Kelas -->
+  <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+    <form method="get">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Tanggal</label>
+          <input type="date" name="tanggal" value="{{ today|date:'Y-m-d' }}" readonly class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 cursor-not-allowed" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Kelas</label>
+          <select name="kelas" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+            <option value="">-- Pilih Kelas --</option>
+            {% for kelas in kelas_list %}
+              <option value="{{ kelas.id }}" {% if kelas_terpilih and kelas.id == kelas_terpilih.id %}selected{% endif %}>{{ kelas.nama_kelas }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="flex items-end">
+          <button type="submit" class="w-full bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Tampilkan</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  {% if siswa_list %}
+  <!-- Form Absensi -->
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <form method="POST" action="{% url 'absensi' %}">
+      {% csrf_token %}
+      <input type="hidden" name="kelas" value="{{ kelas_terpilih.id }}">
+      <div class="p-6">
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead>
+              <tr>
+                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500">No</th>
+                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500">Nama Siswa</th>
+                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500">Status</th>
+                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500">Keterangan</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              {% for siswa in siswa_list %}
+              <tr>
+                <td class="px-6 py-4 text-sm text-gray-900">{{ forloop.counter }}</td>
+                <td class="px-6 py-4 text-sm">{{ siswa.nama_lengkap }}</td>
+                <td class="px-6 py-4">
+                  <select name="status_{{ siswa.id }}" class="rounded-md border-gray-300 shadow-sm">
+                    <option value="Hadir">Hadir</option>
+                    <option value="Izin">Izin</option>
+                    <option value="Sakit">Sakit</option>
+                    <option value="Alfa">Alfa</option>
+                  </select>
+                </td>
+                <td class="px-6 py-4">
+                  <input type="text" name="keterangan_{{ siswa.id }}" class="rounded-md border-gray-300 shadow-sm" placeholder="Tambah keterangan..." />
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class=" px-6 py-4 flex justify-end">
+          <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">Simpan Absensi</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  {% endif %}
+</main>
+{% endblock %}

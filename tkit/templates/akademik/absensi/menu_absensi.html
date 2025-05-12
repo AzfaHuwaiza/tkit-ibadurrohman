@@ -1,0 +1,25 @@
+{% extends 'layout/main.html' %}
+
+<!-- title -->
+{% block title %} Absensi {% endblock title %}
+
+<!-- Start Content -->
+{% block content %}
+<!-- Navbar -->
+{% include 'layout/navbar.html' %}
+<!-- Main Content -->
+<main class="flex-grow max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+  <h1 class="text-3xl font-bold text-gray-900 mb-8 text-center">Absensi</h1>
+  <div class="grid grid-cols-1 gap-8">
+    <a href="{% url 'rekap_absensi'  %}" class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center hover:bg-green-100 transition">
+      <i class="fas fa-file-alt text-4xl text-[#039f18] mb-4"></i>
+      <span class="text-lg font-semibold text-gray-900">Rekap Absensi</span>
+    </a>
+  <div class="grid grid-cols-1 gap-8">
+    <a href="{% url 'absensi'  %}" class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center hover:bg-green-100 transition">
+      <i class="fas fa-user-check text-4xl text-[#039f18] mb-4"></i>
+      <span class="text-lg font-semibold text-gray-900">Mulai Absensi</span>
+    </a>
+  </div>
+</main>
+{% endblock %}

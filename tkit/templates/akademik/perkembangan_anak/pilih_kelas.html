@@ -1,0 +1,16 @@
+{% extends 'layout/main.html' %} {% block title %} Pilih Kelas {% endblock title %} {% block content %} {% include 'layout/navbar.html' %}
+
+<main class="flex-grow max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+  <h1 class="text-3xl font-bold text-gray-900 mb-8 text-center">Pilih Kelas</h1>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+    {% for kelas in kelas_list %}
+    <a href="{% url 'rekap_perkelas' kelas.id %}" class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center hover:bg-green-100 transition">
+      <i class="fas fa-door-open text-4xl text-[#039f18] mb-4"></i>
+      <span class="text-lg font-semibold text-gray-900">{{ kelas.nama_kelas }}</span>
+    </a>
+    {% empty %}
+    <p class="text-center text-gray-600 col-span-full">Belum ada kelas yang kamu ampu.</p>
+    {% endfor %}
+  </div>
+</main>
+{% endblock %}

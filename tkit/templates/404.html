@@ -1,0 +1,52 @@
+{% extends 'ibadurrohman/layout/main.html' %} {% load static %}
+
+<!-- title -->
+{% block title %} Halaman Tidak Ditemukan {% endblock title %}
+
+<!-- Start Content -->
+{% block content %}
+<div class="min-h-screen flex items-center justify-center">
+  <div class="max-w-md w-full text-center px-4">
+    <!-- Error Icon -->
+    <div class="mb-8">
+      <i class="fas fa-search text-[#039f18] text-7xl"></i>
+    </div>
+
+    <!-- Error Code -->
+    <h1 class="text-9xl font-bold text-[#039f18] mb-4">404</h1>
+
+    <!-- Error Message -->
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Halaman Tidak Ditemukan</h2>
+    <p class="text-gray-600 mb-8">Maaf, halaman yang Anda cari tidak dapat ditemukan atau telah dipindahkan.</p>
+
+    <!-- Action Buttons -->
+    <div class="space-y-4">
+      <a href="{% url 'home' %}" class="inline-block bg-[#039f18] text-white px-6 py-3 rounded-lg hover:bg-[#026b10] transition duration-200">
+        <i class="fas fa-home mr-2"></i>
+        Kembali ke Beranda
+      </a>
+      <div class="flex justify-center space-x-4 mt-4">
+        <button onclick="history.back()" class="text-gray-600 hover:text-[#039f18] transition duration-200">
+          <i class="fas fa-arrow-left mr-2"></i>
+          Kembali
+        </button>
+        <span class="text-gray-300">|</span>
+        <a href="#" class="text-gray-600 hover:text-[#039f18] transition duration-200">
+          Laporkan Masalah
+          <i class="fas fa-exclamation-circle ml-2"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- School Info -->
+    <div class="mt-12">
+      <img src="{% static 'data_siswa/images/ibadurrohman_logo.png' %}" alt="TKIT Ibadurrohman Logo" class="mx-auto h-12 mb-4" />
+      <p class="text-gray-500 text-sm">
+        TKIT Ibadurrohman
+        <br />
+        Sistem Informasi Akademik
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

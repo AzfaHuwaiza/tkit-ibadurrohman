@@ -1,0 +1,170 @@
+{% extends 'layout/main.html' %}
+
+<!-- title -->
+{% block title %} rEKAP aBSEN {% endblock title %}
+
+<!-- Start Content -->
+{% block content %}
+<!-- Navbar -->
+{% include 'layout/navbar.html' %}
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+  <!-- Student Info Card -->
+  <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+    <div class="flex items-center">
+      <div class="ml-6">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900">Sdr. {{ ortu.siswa.nama_lengkap }}</h2>
+        <p class="text-sm text-gray-600">
+          Kelas: {{ kelas.nama_kelas }} | 
+          {% if wali_kelas %}Wali Kelas: {{ wali_kelas.user.first_name }} {{ wali_kelas.user.last_name }}{% else %}Wali kelas belum diatur{% endif %}
+        </p>
+        <div class="mt-2 flex flex-wrap gap-2">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+            <span class="mr-2">•</span> Hadir: {{ hadir_count }}
+          </span>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+            <span class="mr-2">•</span> Izin: {{ izin_count }}
+          </span>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800">
+            <span class="mr-2">•</span> Sakit: {{ sakit_count }}
+          </span>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+            <span class="mr-2">•</span> Alpha: {{ alfa_count }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- Filter Section -->
+  <form method="get">
+    <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Bulan</label>
+          <select name="bulan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#039f18] focus:ring-[#039f18]">
+            <option value="">Semua Bulan</option>
+            {% for value, label in bulan_list %}
+              <option value="{{ value }}" {% if selected_bulan == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Status</label>
+          <select name="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#039f18] focus:ring-[#039f18]">
+            <option value="Semua" {% if selected_status == "Semua" %}selected{% endif %}>Semua Status</option>
+            <option value="Hadir" {% if selected_status == "Hadir" %}selected{% endif %}>Hadir</option>
+            <option value="Izin" {% if selected_status == "Izin" %}selected{% endif %}>Izin</option>
+            <option value="Sakit" {% if selected_status == "Sakit" %}selected{% endif %}>Sakit</option>
+            <option value="Alfa" {% if selected_status == "Alfa" %}selected{% endif %}>Alfa</option>
+          </select>
+        </div>
+        <div class="flex items-end">
+          <button type="submit" class="w-full bg-[#039f18] text-white px-4 py-2 rounded-md hover:bg-[#026b10]">Tampilkan</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+
+  <!-- Calendar View -->
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
+    <div class="p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-4">Kalender Absensi - {{ month_name }} {{ year }}</h3>
+      <div class="grid grid-cols-7 gap-2 mb-2">
+        
+        <!-- Calendar Header -->
+        <div class="text-center font-medium text-gray-500">Min</div>
+        <div class="text-center font-medium text-gray-500">Sen</div>
+        <div class="text-center font-medium text-gray-500">Sel</div>
+        <div class="text-center font-medium text-gray-500">Rab</div>
+        <div class="text-center font-medium text-gray-500">Kam</div>
+        <div class="text-center font-medium text-gray-500">Jum</div>
+        <div class="text-center font-medium text-gray-500">Sab</div>
+      
+
+        <!-- Calendar Days -->
+        <!-- Week 1 -->
+          {% for day in calendar_days %}
+            {% if day.day == 0 %}
+              <div></div>
+            {% else %}
+              {% if day.status == "Hadir" %}
+                <div class="text-center p-2 bg-green-100 rounded-lg">{{ day.day }}</div>
+              {% elif day.status == "Izin" %}
+                <div class="text-center p-2 bg-yellow-100 rounded-lg">{{ day.day }}</div>
+              {% elif day.status == "Sakit" %}
+                <div class="text-center p-2 bg-orange-100 rounded-lg">{{ day.day }}</div>
+              {% elif day.status == "Alfa" %}
+                <div class="text-center p-2 bg-red-100 rounded-lg">{{ day.day }}</div>
+              {% else %}
+                <div class="text-center p-2 text-gray-400">{{ day.day }}</div>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+      </div>
+
+      <div class="mt-4 flex space-x-4">
+        <span class="inline-flex items-center">
+          <span class="w-4 h-4 bg-green-100 rounded-lg mr-2"></span>
+          <span class="text-sm text-gray-600">Hadir</span>
+        </span>
+        <span class="inline-flex items-center">
+          <span class="w-4 h-4 bg-yellow-100 rounded-lg mr-2"></span>
+          <span class="text-sm text-gray-600">Izin</span>
+        </span>
+        <span class="inline-flex items-center">
+          <span class="w-4 h-4 bg-orange-100 rounded-lg mr-2"></span>
+          <span class="text-sm text-gray-600">Sakit</span>
+        </span>
+        <span class="inline-flex items-center">
+          <span class="w-4 h-4 bg-red-100 rounded-lg mr-2"></span>
+          <span class="text-sm text-gray-600">Alfa</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detailed Attendance List -->
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div class="p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-4">Riwayat Detail Absensi</h3>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead>
+            <tr>
+              <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+              <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Keterangan</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            {% if absensi_list %} {% for absen in absensi_list %}
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ absen.tanggal|date:"d F Y" }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                {% if absen.status == 'Hadir' %}
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"> Hadir </span>
+                {% elif absen.status == 'Sakit' %}
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange-100 text-orange-800"> Sakit </span>
+                {% elif absen.status == 'Izin' %}
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800"> Izin </span>
+                {% else %}
+                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"> Alfa </span>
+                {% endif %}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ absen.keterangan|default:"-" }}</td>
+            </tr>
+            {% endfor %} {% else %}
+            <tr>
+              <td colspan="4" class="px-6 py-4 text-center text-gray-500">Tidak ada data absensi.</td>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

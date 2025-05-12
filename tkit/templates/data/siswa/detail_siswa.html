@@ -1,0 +1,76 @@
+{% extends 'layout/main.html' %}
+
+<!-- title -->
+{% block title %} Data Siswa {% endblock title %}
+
+<!-- Start Content -->
+{% block content %}
+<!-- Navbar -->
+{% include 'layout/navbar.html' %}
+
+<main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+  <!-- Bagian Detail Siswa -->
+  <div class="px-4 py-6 sm:px-0">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="px-4 py-5 sm:px-6 bg-[#039f18]">
+        <h3 class="text-lg leading-6 font-medium text-white">Detail Siswa</h3>
+        <p class="mt-1 max-w-2xl text-sm text-white opacity-80">Informasi lengkap tentang siswa</p>
+      </div>
+
+      <div class="border-t border-gray-200">
+        <div class="px-4 py-5 sm:p-6">
+          <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+            <div class="sm:col-span-3">
+              <dt class="text-sm font-medium text-gray-500">NIS</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ siswa.nis }}</dd>
+            </div>
+
+            <div class="sm:col-span-3">
+              <dt class="text-sm font-medium text-gray-500">NISN</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ siswa.nisn }}</dd>
+            </div>
+
+            <div class="sm:col-span-3">
+              <dt class="text-sm font-medium text-gray-500">Nama Lengkap</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ siswa.nama_lengkap }}</dd>
+            </div>
+
+            <div class="sm:col-span-3">
+              <dt class="text-sm font-medium text-gray-500">Jenis Kelamin</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ siswa.jenis_kelamin }}</dd>
+            </div>
+
+            <div class="sm:col-span-3">
+              <dt class="text-sm font-medium text-gray-500">Tempat, Tanggal Lahir</dt>
+              <dd class="mt-1 text-sm text-gray-900">{{ siswa.tempat_lahir }}, {{ siswa.tanggal_lahir }}</dd>
+            </div>
+
+            <div class="sm:col-span-3">
+              <dt class="text-sm font-medium text-gray-500">Nama Orang Tua</dt>
+              <dd class="mt-1 text-sm text-gray-900">{% if siswa.ortu %} {{ siswa.ortu.user.first_name }} {{ siswa.ortu.user.last_name }} {% else %} {{ siswa.nama_orang_tua }} {% endif %}</dd>
+            </div>
+
+            <div class="sm:col-span-3">
+              <dt class="text-sm font-medium text-gray-500">Alamat</dt>
+              <dd class="mt-1 text-sm text-gray-900">{% if siswa.ortu and siswa.ortu.alamat %} {{ siswa.ortu.alamat }} {% else %} {{ siswa.alamat }} {% endif %}</dd>
+            </div>
+
+            <div class="sm:col-span-3">
+              <dt class="text-sm font-medium text-gray-500">Nomor HP Orang Tua</dt>
+              <dd class="mt-1 text-sm text-gray-900">{% if siswa.ortu and siswa.ortu.nomor_hp %} {{ siswa.ortu.nomor_hp}} {% else %} {{ siswa.no_hp_ortu }} {% endif %}</dd>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <button onclick="history.back()" class="text-[#039f18] hover:text-gray-600 transition duration-200">
+              <i class="fas fa-arrow-left mr-2"></i>
+              Kembali
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'layout/main.html' %}
+
+<!-- title -->
+{% block title %} Pemberitahuan {% endblock title %}
+
+<!-- Start Content -->
+{% block content %}
+<!-- Navbar -->
+{% include 'layout/navbar.html' %}
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+  <!-- Kartu Informasi Siswa -->
+  <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+    <div class="flex items-center">
+      <div class="ml-6">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900">{{ siswa.nama_lengkap }}</h2>
+        <p class="text-sm text-gray-600">Kelas {{ siswa.kelas.nama_kelas }} - {{ siswa.kelas.wali_kelas }}</p>
+        <span class="inline-block mt-2 text-xs px-3 py-1 rounded-full bg-[#039f18] text-white">Tahun Ajaran {{ tahun_ajaran }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Periode -->
+  <div class="bg-white rounded-lg shadow p-4 mb-6">
+    <form method="GET" class="flex flex-col md:flex-row gap-4 md:items-center">
+      <label class="text-sm font-medium text-gray-700">Pilih Periode:</label>
+      <select name="periode" class="w-full md:w-auto rounded-md border-gray-300 shadow-sm focus:ring-[#039f18] focus:border-[#039f18]">
+        {% for p in periode_list %}
+          <option value="{{ p.id }}" {% if p.id == periode.id %}selected{% endif %}>{{ p.minggu }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit" class="bg-[#039f18] text-white px-4 py-2 rounded-md hover:bg-[#026b10] text-sm">Tampilkan</button>
+    </form>
+  </div>
+
+  <!-- Perkembangan per Kategori -->
+  {% for kategori, data_list in perkembangan_by_kategori.items %}
+  <div class="bg-white rounded-lg shadow-lg mb-6">
+    <div class="p-6 border-b border-gray-200">
+      <h3 class="text-lg font-semibold text-gray-900">{{ kategori }}</h3>
+    </div>
+    <div class="p-6 space-y-4">
+      {% for perkembangan in data_list %}
+      <div class="border-b pb-4">
+        <p class="text-sm text-gray-600">{{ perkembangan.deskripsi }}</p>
+        
+        <!-- Catatan Guru per item -->
+        {% if perkembangan.catatan %}
+        <div class="mt-2 bg-yellow-50 border-l-4 border-yellow-400 p-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <i class="fas fa-comment-dots text-yellow-400"></i>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm text-yellow-700">{{ perkembangan.catatan }}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      {% empty %}
+      <p class="text-sm text-gray-500">Belum ada catatan untuk kategori ini.</p>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+
+
+  <!-- Catatan Guru -->
+  {% if catatan %}
+  {% endif %}
+</main>
+{% endblock %}

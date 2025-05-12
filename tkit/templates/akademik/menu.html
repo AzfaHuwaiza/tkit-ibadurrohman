@@ -1,0 +1,34 @@
+{% extends 'layout/main.html' %}
+
+<!-- title -->
+{% block title %} Menu Akademik {% endblock title %}
+
+<!-- Start Content -->
+{% block content %}
+<!-- Navbar -->
+{% include 'layout/navbar.html' %}
+<main class="gr flex-grow max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+  <div class="rounded-t-lg flex items-center justify-between mb-8">
+    <!-- Kiri: Tombol kembali -->
+    <a href="{% url 'home' %}" class="hidden md:block px-3 py-1 text-[#039f18] text-lg font-medium w-[90px] text-left"> Kembali </a>
+
+    <!-- Tengah: Judul -->
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 text-center flex-1">Menu Akademik</h1>
+
+    <!-- Kanan: Spacer (hanya buat imbangin tombol kiri) -->
+    <div class="w-[90px] hidden md:block"></div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-8">
+    <a href="{% url 'menu_absensi' %}" class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center hover:bg-green-100 transition">
+      <i class="fas fa-calendar-check text-4xl text-[#039f18] mb-4"></i>
+      <span class="text-lg font-semibold text-gray-900">Absensi</span>
+    </a>
+    <a href="{% url 'pilih_kelas_perkembangan' %}" class="bg-white rounded-lg shadow-md p-6 flex flex-col items-center hover:bg-green-100 transition">
+      <i class="fas fa-child text-4xl text-[#039f18] mb-4"></i>
+      <span class="text-lg font-semibold text-gray-900">Perkembangan Anak</span>
+    </a>
+    <a href="{% url 'home' %}" class="inline-flex md:hidden justify-center py-2 px-4 border border-transparent shadow-sm text-sm md:text-sm font-medium rounded-md text-white bg-[#039f18] hover:bg-[#026b10]">Kembali</a>
+  </div>
+</main>
+{% endblock %}
