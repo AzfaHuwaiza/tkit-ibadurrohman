@@ -77,7 +77,7 @@ DATABASES = {
     'default': dj_database_url.config(
         default=os.environ.get('DATABASE_URL'),
         conn_max_age=600,
-        ssl_require=True  # Optional: tergantung database provider
+        ssl_require=False  # Optional: tergantung database provider
     )
 }
 
