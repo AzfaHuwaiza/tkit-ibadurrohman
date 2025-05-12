@@ -27,5 +27,4 @@ def menu_data(request):
 def home_view(request):
     return render(request, 'home.html')
 
-def handler403(request):
-    return render(request, '403.html')
+
